@@ -1,0 +1,39 @@
+{
+  "name": "nbc6_kiosk",
+  "version": "1.0.0",
+  "description": "> 내배캠 6기 Node.js 여러분들 환영합니다 일자별 브랜치를 확인하세요.",
+  "main": "src/init.js",
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/init.js",
+    "build": "babel src --out-dir dist --copy-files ",
+    "start": "node dist/init.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ho-yeong/nbc6-kiosk.git"
+  },
+  "keywords": [
+    "kiosk"
+  ],
+  "author": "simon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ho-yeong/nbc6-kiosk/issues"
+  },
+  "homepage": "https://github.com/Ho-yeong/nbc6-kiosk#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.5.2",
+    "nodemon": "^3.0.1",
+    "sequelize": "^6.32.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9",
+    "@babel/node": "^7.22.6",
+    "@babel/preset-env": "^7.22.9",
+    "prettier": "^3.0.0"
+  }
+}
