@@ -1,14 +1,17 @@
 # Kiosk Project
 
-> 내배캠 6기 Node.js 여러분들 환영합니다
-일자별 브랜치를 확인하세요.
+### 7/25 프로젝트 세팅
 
-#### 7/25 프로젝트 세팅
-#### 7/26 상품 관리
-#### 7/27 상품 관리(2)
-#### 7/28 상품 발주
-#### 7/31 주문 관리
-#### 8/1 주문 관리(2)
-#### 8/2 상품 옵션 관리
-#### 8/3 상품 옵션 관리 (2)
-#### 8/4 서비스 로직 수정
+기본 라이브러리 다운로드
+```
+npm install -D @babel/cli @babel/core @babel/node @babel/preset-env prettier
+npm install express cookie-parser dotenv mysql2 nodemon sequelize
+```
+
+바벨 기본 설정 세팅
+```
+// babel.config.json 
+{
+  "presets": ["@babel/preset-env"]
+}
+```
