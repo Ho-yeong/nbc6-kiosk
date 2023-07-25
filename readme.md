@@ -1,17 +1,6 @@
 # Kiosk Project
 
-### 7/25 프로젝트 세팅
+### 7/26 상품 관리
 
-기본 라이브러리 다운로드
-```
-npm install -D @babel/cli @babel/core @babel/node @babel/preset-env prettier
-npm install express cookie-parser dotenv mysql2 nodemon sequelize
-```
-
-바벨 기본 설정 세팅
-```
-// babel.config.json 
-{
-  "presets": ["@babel/preset-env"]
-}
-```
+- ITEM 테이블 생성
+- 상품 추가 API
