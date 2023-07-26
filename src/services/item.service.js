@@ -2,6 +2,7 @@ import { ItemRepository } from '../repositories';
 import { itemType } from '../constants';
 import { Messages } from '../error/messages';
 import { Item } from '../db';
+import { ValidationCheck } from '../utils/validationCheck';
 
 class ItemService {
   _itemRepo = new ItemRepository();
@@ -10,7 +11,7 @@ class ItemService {
     if (!item.name) {
       return {
         code: 400,
-        message: '이름을 입력해주세요.',
+        message: Messages.WrongName,
       };
     }
 
@@ -21,10 +22,10 @@ class ItemService {
       };
     }
 
-    if (!this.itemCheck(item.type)) {
+    if (!ValidationCheck(itemType, item.type)) {
       return {
         code: 400,
-        message: '올바른 타입을 지정해주세요',
+        message: Messages.WrongType,
       };
     }
 
@@ -35,10 +36,10 @@ class ItemService {
   };
 
   getItems = async (type) => {
-    if (!this.itemCheck(type) && type !== 'all') {
+    if (!ValidationCheck(itemType, type) && type !== 'all') {
       return {
         code: 400,
-        message: '올바른 타입을 지정해주세요',
+        message: Messages.WrongType,
       };
     }
 
@@ -94,7 +95,7 @@ class ItemService {
     if (item.name !== undefined && item.name === '') {
       return {
         code: 400,
-        message: '올바른 이름을 입력해주세요.',
+        message: Messages.WrongName,
       };
     }
     if (item.price !== undefined && item.price < 0) {
@@ -116,12 +117,6 @@ class ItemService {
     return {
       code: 200,
     };
-  };
-
-  // 아이템 타입 유효성 검사
-  itemCheck = (type) => {
-    const itemTypeArray = Object.values(itemType);
-    return itemTypeArray.includes(type);
   };
 }
 

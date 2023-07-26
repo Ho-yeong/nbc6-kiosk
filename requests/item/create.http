@@ -4,5 +4,5 @@ Content-Type: application/json
 {
   "name": "오렌지쥬스",
   "price": 200,
-  "type": "juice123"
+  "type": "juice"
 }

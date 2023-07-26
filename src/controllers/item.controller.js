@@ -1,4 +1,5 @@
 import { ItemService } from '../services';
+import { Messages } from '../error/messages';
 
 class ItemController {
   _itemService = new ItemService();
@@ -12,7 +13,7 @@ class ItemController {
       res.status(code).json({ ...(data && { data }), ...(message && { message }) });
     } catch (e) {
       console.log(e);
-      res.status(500).json({ message: 'Internal Server Error' });
+      res.status(500).json({ message: Messages.ServerError });
     }
   };
 
@@ -25,7 +26,7 @@ class ItemController {
       res.status(code).json({ ...(data && { data }), ...(message && { message }) });
     } catch (e) {
       console.log(e);
-      res.status(500).json({ message: 'Internal Server Error' });
+      res.status(500).json({ message: Messages.ServerError });
     }
   };
 
@@ -38,7 +39,7 @@ class ItemController {
       res.status(code).json({ ...(data && { data }), ...(message && { message }) });
     } catch (e) {
       console.log(e);
-      res.status(500).json({ message: 'Internal Server Error' });
+      res.status(500).json({ message: Messages.ServerError });
     }
   };
 
@@ -51,7 +52,7 @@ class ItemController {
       res.status(code).json({ ...(data && { data }), ...(message && { message }) });
     } catch (e) {
       console.log(e);
-      res.status(500).json({ message: 'Internal Server Error' });
+      res.status(500).json({ message: Messages.ServerError });
     }
   };
 
@@ -64,7 +65,7 @@ class ItemController {
       res.status(code).json({ ...(data && { data }), ...(message && { message }) });
     } catch (e) {
       console.log(e);
-      res.status(500).json({ message: 'Internal Server Error' });
+      res.status(500).json({ message: Messages.ServerError });
     }
   };
 }
