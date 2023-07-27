@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../sequelize';
-import { itemOrderState, itemType } from '../../constants';
+import { orderItemState, itemType } from '../../constants';
 import item from './item';
 
 class OrderItem extends Model {}
@@ -19,9 +19,7 @@ OrderItem.init(
     state: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: itemOrderState.ORDERED,
-      min: itemOrderState.ORDERED,
-      max: itemOrderState.CANCELED,
+      defaultValue: orderItemState.ORDERED,
     },
   },
   {

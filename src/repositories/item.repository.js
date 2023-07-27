@@ -42,6 +42,14 @@ class ItemRepository {
       },
     );
   };
+
+  updateAmount = async (itemId, amount, t) => {
+    if (!t) {
+      return false;
+    }
+
+    return Item.update({ amount }, { where: { id: itemId } });
+  };
 }
 
 export default ItemRepository;
