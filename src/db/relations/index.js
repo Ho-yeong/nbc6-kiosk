@@ -1,7 +1,11 @@
-import ItemRelation from './item.relation';
-import OrderItemRelation from './orderItem.relation';
+import itemRelation from './item.relation';
+import orderItemRelation from './orderItem.relation';
+import orderCustomerRelation from './orderCustomer.relation';
+import itemOrderCustomerRelation from './itemOrderCustomer.relation';
 
 export default {
-  ItemRelation,
-  OrderItemRelation,
+  itemRelation,
+  orderItemRelation,
+  orderCustomerRelation,
+  itemOrderCustomerRelation,
 };
