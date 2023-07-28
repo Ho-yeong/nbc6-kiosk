@@ -33,7 +33,10 @@ class OrderService {
 
     return {
       code: 200,
-      data: await this._orderRepo.create(orders, t),
+      data: {
+        order: await this._orderRepo.create(orders, t),
+        totalPrice,
+      },
     };
   };
 }
