@@ -4,9 +4,5 @@ import ItemOrderCustomer from '../models/itemOrderCustomer';
 
 export default () => {
   Item.hasMany(OrderItem);
-  Item.hasOne(ItemOrderCustomer, {
-    foreignKey: {
-      allowNull: false,
-    },
-  });
+  Item.hasMany(ItemOrderCustomer);
 };

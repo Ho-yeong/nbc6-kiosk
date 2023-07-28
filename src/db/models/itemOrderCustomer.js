@@ -11,6 +11,14 @@ ItemOrderCustomer.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    option: {
+      type: DataTypes.JSON,
+      allowNull: true,
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     sequelize,
@@ -19,7 +27,5 @@ ItemOrderCustomer.init(
     timestamps: false,
   },
 );
-
-ItemOrderCustomer.removeAttribute('id');
 
 export default ItemOrderCustomer;

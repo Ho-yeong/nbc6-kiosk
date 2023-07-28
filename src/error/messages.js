@@ -8,4 +8,5 @@ export const Messages = {
   WrongAmount: '올바른 수량을 입력해주세요.',
   WrongState: '올바른 상태를 선택해주세요.',
   CannotChangeState: '상태를 변경할 수 없습니다.',
+  LessAmount: '상품의 수량이 모자랍니다.',
 };

@@ -23,7 +23,7 @@ export class Server {
   };
 
   sequelizeSync = () => {
-    return sequelize.sync({ force: true });
+    return sequelize.sync({ alter: true });
   };
 
   runServer = async () => {

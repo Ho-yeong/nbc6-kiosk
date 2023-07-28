@@ -1,4 +1,4 @@
-import OrderCustomer from '../models/orderItem';
+import OrderCustomer from '../models/orderCustomer';
 import ItemOrderCustomer from '../models/itemOrderCustomer';
 import Item from '../models/item';
 
@@ -7,6 +7,14 @@ export default () => {
     targetKey: 'id',
     foreignKey: {
       name: 'orderCustomerId',
+      allowNull: false,
+    },
+  });
+
+  ItemOrderCustomer.belongsTo(Item, {
+    targetKey: 'id',
+    foreignKey: {
+      name: 'itemId',
       allowNull: false,
     },
   });
