@@ -1,4 +1,4 @@
-import { ItemOrderCustomer, OrderCustomer } from '../db';
+import { ItemOrderCustomer, OrderCustomer, Item } from '../db';
 
 const orderObject = {
   // 유저에게 받는 값
@@ -10,6 +10,14 @@ const orderObject = {
 
 // 주문 관련 Repository
 class OrderRepository {
+  findOne = async (orderId) => {
+    return await OrderCustomer.findOne({
+      where: {
+        id: orderId,
+      },
+    });
+  };
+
   create = async (orders, t) => {
     const result = await OrderCustomer.create({}, { transaction: t });
 
@@ -27,6 +35,37 @@ class OrderRepository {
 
     await t.commit();
     return result;
+  };
+
+  updateState = async (orderId, t) => {
+    await OrderCustomer.update(
+      { state: true },
+      {
+        where: {
+          id: orderId,
+        },
+        transaction: t,
+      },
+    );
+
+    const orders = await ItemOrderCustomer.findAll({
+      where: {
+        orderCustomerId: orderId,
+      },
+      transaction: t,
+    });
+
+    for (let i = 0; i < orders.length; i++) {
+      await Item.decrement(
+        { amount: orders[i].amount },
+        {
+          where: {
+            id: orders[i].itemId,
+          },
+          transaction: t,
+        },
+      );
+    }
   };
 }
 

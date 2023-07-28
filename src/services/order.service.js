@@ -39,6 +39,22 @@ class OrderService {
       },
     };
   };
+
+  updateState = async (orderId, t) => {
+    const order = await this._orderRepo.findOne(orderId);
+    if (order.state) {
+      return {
+        code: 400,
+        message: Messages.AlreadyDone,
+      };
+    }
+
+    await this._orderRepo.updateState(orderId, t);
+    await t.commit();
+    return {
+      code: 200,
+    };
+  };
 }
 
 export default OrderService;
