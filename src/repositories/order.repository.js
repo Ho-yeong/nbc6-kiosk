@@ -1,4 +1,5 @@
-import { ItemOrderCustomer, OrderCustomer, Item } from '../db';
+import { ItemOrderCustomer, OrderCustomer, Item, sequelize } from '../db';
+import { QueryTypes } from 'sequelize';
 
 const orderObject = {
   // 유저에게 받는 값
@@ -11,11 +12,30 @@ const orderObject = {
 // 주문 관련 Repository
 class OrderRepository {
   findOne = async (orderId) => {
-    return await OrderCustomer.findOne({
+    return OrderCustomer.findOne({
       where: {
         id: orderId,
       },
     });
+  };
+  //
+  // SELECT SUM(a.amount) AS 'sum' FROM item_order_customers AS a
+  // LEFT JOIN order_customers AS oc ON a.order_customer_id = oc.id
+  // WHERE oc.state = false AND a.item_id = 2;
+  findItemOrderCount = async (itemId) => {
+    const result = await sequelize.query(
+      `
+        SELECT SUM(a.amount) AS 'sum' FROM item_order_customers AS a
+            LEFT JOIN order_customers AS oc ON a.order_customer_id = oc.id
+                                    WHERE oc.state = false AND a.item_id = :item_id;
+    `,
+      {
+        replacements: { item_id: itemId },
+        type: QueryTypes.SELECT,
+      },
+    );
+
+    return Number(result[0].sum);
   };
 
   create = async (orders, t) => {

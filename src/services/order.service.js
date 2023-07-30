@@ -17,8 +17,12 @@ class OrderService {
         };
       }
 
+      // 미완료된 주문에 있는 상품 갯수
+      const orderedItemCount = await this._orderRepo.findItemOrderCount(orders[i].itemId);
+
       // 수량 체크
-      if (item.amount < orders[i].amount) {
+      // 전체 < 현재 주문한 갯수 + 미완료된 주문에 포함된 갯수
+      if (item.amount < orders[i].amount + orderedItemCount) {
         return {
           code: 400,
           message: Messages.LessAmount,

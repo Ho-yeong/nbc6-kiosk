@@ -5,11 +5,11 @@ Content-Type: application/json
   "orders": [
     {
       "itemId": 1,
-      "amount": 3
+      "amount": 2
     },
     {
       "itemId": 2,
-      "amount": 5
+      "amount": 2
     }
   ]
 }
