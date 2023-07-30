@@ -1,4 +1,5 @@
 import { Item, Option } from '../db';
+import { QueryTypes } from 'sequelize';
 
 class ItemRepository {
   create = async (item) => {

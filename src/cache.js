@@ -25,6 +25,10 @@ class ServerCache {
   deleteOption = (id) => {
     this._nodeCache.del(`option:${id}`);
   };
+
+  getOption = (id) => {
+    return this._nodeCache.get(`option:${id}`);
+  };
 }
 
 export const serverCache = new ServerCache();

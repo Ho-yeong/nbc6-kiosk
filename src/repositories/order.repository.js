@@ -23,10 +23,7 @@ class OrderRepository {
       },
     });
   };
-  //
-  // SELECT SUM(a.amount) AS 'sum' FROM item_order_customers AS a
-  // LEFT JOIN order_customers AS oc ON a.order_customer_id = oc.id
-  // WHERE oc.state = false AND a.item_id = 2;
+
   findItemOrderCount = async (itemId) => {
     const result = await sequelize.query(
       `
@@ -52,6 +49,7 @@ class OrderRepository {
           itemId: orders[i].itemId,
           amount: orders[i].amount,
           price: orders[i].price,
+          option: orders[i].option,
           orderCustomerId: result.id,
         },
         { transaction: t },

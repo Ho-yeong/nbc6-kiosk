@@ -1,15 +1,16 @@
-import { ItemRepository, OptionRepository } from '../repositories';
+import { ItemRepository, OrderRepository } from '../repositories';
 import { itemType } from '../constants';
 import { Messages } from '../error/messages';
 import { ValidationCheck } from '../utils/validationCheck';
+import { serverCache } from '../cache';
 
 class ItemService {
   _itemRepo = new ItemRepository();
-  _optionRepo = new OptionRepository();
+  _orderRepo = new OrderRepository();
 
   create = async (item) => {
     if (item.optionId) {
-      const option = await this._optionRepo.findOne(item.optionId);
+      const option = serverCache.getOption(item.optionId);
       if (!option) {
         return {
           code: 404,
@@ -53,9 +54,24 @@ class ItemService {
       };
     }
 
+    const origin = await this._itemRepo.getItems(type);
+
+    let data = [];
+
+    for (let i = 0; i < origin.length; i++) {
+      const orderedCount = await this._orderRepo.findItemOrderCount(origin[i].id);
+      const temp = {
+        ...origin[i].dataValues,
+        amount: origin[i].amount - orderedCount,
+        option: serverCache.getOption(origin[i].optionId),
+      };
+
+      data.push(temp);
+    }
+
     return {
       code: 200,
-      data: await this._itemRepo.getItems(type),
+      data,
     };
   };
 
@@ -117,7 +133,7 @@ class ItemService {
     }
 
     if (item.optionId !== undefined) {
-      const option = await this._optionRepo.findOne(item.optionId);
+      const option = serverCache.getOption(item.optionId);
       if (!option) {
         return {
           code: 404,

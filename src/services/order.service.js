@@ -1,5 +1,6 @@
 import { ItemRepository, OrderRepository } from '../repositories';
 import { Messages } from '../error/messages';
+import { serverCache } from '../cache';
 
 class OrderService {
   _orderRepo = new OrderRepository();
@@ -30,9 +31,25 @@ class OrderService {
       }
 
       let price = orders[i].amount * item.price;
+      const option = serverCache.getOption(item.optionId);
+      if (!option) {
+        return {
+          code: 400,
+          message: Messages.NoneExistOption,
+        };
+      }
+
+      if (orders[i].option.shot) {
+        price += option.shotPrice * orders[i].option.shot;
+      }
+
+      if (orders[i].option.extra) {
+        price += option.extraPrice;
+      }
+
       totalPrice += price;
 
-      orders[i].price = item.price;
+      orders[i].price = price;
     }
 
     return {
