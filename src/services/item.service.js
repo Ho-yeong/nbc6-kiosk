@@ -85,9 +85,9 @@ class ItemService {
       };
     }
 
-    const result = await this._itemRepo.delete(itemId);
+    const result = await this._itemRepo.softDelete(itemId);
 
-    if (!result) {
+    if (!result[0]) {
       return {
         code: 404,
         message: '이미 삭제된 아이템입니다.',
@@ -111,9 +111,9 @@ class ItemService {
       };
     }
 
-    const result = await this._itemRepo.delete(itemId);
+    const result = await this._itemRepo.softDelete(itemId);
 
-    if (!result) {
+    if (!result[0]) {
       return {
         code: 404,
         message: Messages.NoneExist,

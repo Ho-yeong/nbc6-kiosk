@@ -31,6 +31,11 @@ Item.init(
       allowNull: false,
       defaultValue: 0,
     },
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
   },
   {
     sequelize,

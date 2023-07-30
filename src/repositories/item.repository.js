@@ -10,6 +10,7 @@ class ItemRepository {
     return Item.findAll({
       where: {
         ...(type !== 'all' && { type }),
+        isDeleted: false,
       },
       attributes: ['id', 'name', 'price', 'type', 'amount', 'createdAt', 'updatedAt', 'optionId'],
     });
@@ -23,12 +24,17 @@ class ItemRepository {
     });
   };
 
-  delete = async (itemId) => {
-    return Item.destroy({
-      where: {
-        id: itemId,
+  softDelete = async (itemId) => {
+    return Item.update(
+      {
+        isDeleted: true,
       },
-    });
+      {
+        where: {
+          id: itemId,
+        },
+      },
+    );
   };
 
   modify = async (item) => {
