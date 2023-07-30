@@ -34,6 +34,7 @@ class ItemRepository {
       {
         ...(item.name && { name: item.name }),
         ...(item.price && { price: item.price }),
+        ...(item.optionId && { optionId: item.optionId }),
       },
       {
         where: {

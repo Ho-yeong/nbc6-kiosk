@@ -2,9 +2,10 @@ POST http://localhost:3000/api/item
 Content-Type: application/json
 
 {
-  "name": "허니브레드",
-  "price": 4500,
-  "type": "food"
+  "name": "아메리카노",
+  "price": 2500,
+  "type": "coffee",
+  "optionId": 1
 }
 
 ###  {

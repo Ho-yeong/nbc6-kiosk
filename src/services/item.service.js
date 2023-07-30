@@ -1,4 +1,4 @@
-import { ItemRepository } from '../repositories';
+import { ItemRepository, OptionRepository } from '../repositories';
 import { itemType } from '../constants';
 import { Messages } from '../error/messages';
 import { Item } from '../db';
@@ -6,8 +6,19 @@ import { ValidationCheck } from '../utils/validationCheck';
 
 class ItemService {
   _itemRepo = new ItemRepository();
+  _optionRepo = new OptionRepository();
 
   create = async (item) => {
+    if (item.optionId) {
+      const option = await this._optionRepo.findOne(item.optionId);
+      if (!option) {
+        return {
+          code: 404,
+          message: Messages.NoneExistOption,
+        };
+      }
+    }
+
     if (!item.name) {
       return {
         code: 400,
@@ -98,11 +109,22 @@ class ItemService {
         message: Messages.WrongName,
       };
     }
+
     if (item.price !== undefined && item.price < 0) {
       return {
         code: 400,
         message: Messages.WrongPrice,
       };
+    }
+
+    if (item.optionId !== undefined) {
+      const option = await this._optionRepo.findOne(item.optionId);
+      if (!option) {
+        return {
+          code: 404,
+          message: Messages.NoneExistOption,
+        };
+      }
     }
 
     const result = await this._itemRepo.modify(item);

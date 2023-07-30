@@ -1,43 +1,38 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../sequelize';
-import { itemType } from '../../constants';
 
-class Item extends Model {}
+class Option extends Model {}
 
-Item.init(
+Option.init(
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    price: {
+    extraPrice: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
     },
-    type: {
-      type: DataTypes.ENUM({
-        values: Object.values(itemType),
-      }),
-      allowNull: false,
-    },
-    amount: {
+    shotPrice: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
+    },
+    // option 상의 hot 이 false 일 경우는 고객이 hot, ice 옵션 선택 불가
+    hot: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
   },
   {
     sequelize,
-    modelName: 'Item',
+    modelName: 'Option',
     underscored: true,
     timestamps: true,
   },
 );
 
-export default Item;
+export default Option;

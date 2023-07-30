@@ -6,9 +6,14 @@ class ItemController {
 
   create = async (req, res) => {
     try {
-      const { name, price, type } = req.body;
+      const { name, price, type, optionId } = req.body;
 
-      const { code, data, message } = await this._itemService.create({ name, price, type });
+      const { code, data, message } = await this._itemService.create({
+        name,
+        price,
+        type,
+        optionId,
+      });
 
       res.status(code).json({ ...(data && { data }), ...(message && { message }) });
     } catch (e) {
@@ -58,9 +63,9 @@ class ItemController {
 
   modify = async (req, res) => {
     try {
-      const { id, name, price } = req.body;
+      const { id, name, price, optionId } = req.body;
 
-      const { code, data, message } = await this._itemService.modify({ id, name, price });
+      const { code, data, message } = await this._itemService.modify({ id, name, price, optionId });
 
       res.status(code).json({ ...(data && { data }), ...(message && { message }) });
     } catch (e) {

@@ -2,6 +2,6 @@ PUT http://localhost:3000/api/item
 Content-Type: application/json
 
 {
-  "id": 4,
-  "price": -200
+  "id": 2,
+  "optionId": 101
 }

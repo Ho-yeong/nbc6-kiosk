@@ -1,10 +1,10 @@
-POST http://localhost:3000/api/item
+POST http://localhost:3000/api/option
 Content-Type: application/json
 
 {
-  "name": "허니브레드",
-  "price": 4500,
-  "type": "food"
+  "shotPrice": 500,
+  "extraPrice": 700,
+  "hot": true
 }
 
 ###  {

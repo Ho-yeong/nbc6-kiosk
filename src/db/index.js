@@ -3,10 +3,11 @@ import Item from './models/item';
 import OrderItem from './models/orderItem';
 import OrderCustomer from './models/orderCustomer';
 import ItemOrderCustomer from './models/itemOrderCustomer';
+import Option from './models/option';
 import relations from './relations';
 
 Object.values(relations).forEach((relationsFunction) => {
   relationsFunction();
 });
 
-export { sequelize, Item, OrderItem, OrderCustomer, ItemOrderCustomer };
+export { sequelize, Item, OrderItem, OrderCustomer, ItemOrderCustomer, Option };
