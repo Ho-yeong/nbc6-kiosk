@@ -29,6 +29,15 @@ class ServerCache {
   getOption = (id) => {
     return this._nodeCache.get(`option:${id}`);
   };
+
+  setItemId = (id) => {
+    // 10초 동안 유지
+    this._nodeCache.set(`item:${id}`, id, 10000);
+  };
+
+  checkWillDeleteItem = (id) => {
+    return this._nodeCache.get(`item:${id}`);
+  };
 }
 
 export const serverCache = new ServerCache();

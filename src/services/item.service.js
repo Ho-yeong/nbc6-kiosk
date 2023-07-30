@@ -78,6 +78,7 @@ class ItemService {
   delete = async (itemId) => {
     const item = await this._itemRepo.findOne(itemId);
     if (item.amount > 0) {
+      serverCache.setItemId(itemId);
       return {
         code: 400,
         message: '상품의 수량이 남아있습니다.',
@@ -101,7 +102,14 @@ class ItemService {
   forceDelete = async (itemId) => {
     // 이전에 보냈던 delete 리퀘스트에서 수량이 있는 경우에도 삭제를 원할 경우
     // 이곳에서 이전의 request 정보와 비교.
-    // 서버 메모리 데이터 사용 예정
+
+    const check = serverCache.checkWillDeleteItem(itemId);
+    if (!check) {
+      return {
+        code: 400,
+        message: Messages.AlreadyDone,
+      };
+    }
 
     const result = await this._itemRepo.delete(itemId);
 
