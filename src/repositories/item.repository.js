@@ -1,4 +1,4 @@
-import { Item } from '../db';
+import { Item, Option } from '../db';
 
 class ItemRepository {
   create = async (item) => {
@@ -10,6 +10,7 @@ class ItemRepository {
       where: {
         ...(type !== 'all' && { type }),
       },
+      attributes: ['id', 'name', 'price', 'type', 'amount', 'createdAt', 'updatedAt', 'optionId'],
     });
   };
 

@@ -1,7 +1,6 @@
 import { ItemRepository, OptionRepository } from '../repositories';
 import { itemType } from '../constants';
 import { Messages } from '../error/messages';
-import { Item } from '../db';
 import { ValidationCheck } from '../utils/validationCheck';
 
 class ItemService {

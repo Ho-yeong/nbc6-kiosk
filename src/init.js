@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import Http from 'node:http';
 import { ExpressApp } from './app';
 import { sequelize } from './db';
+import { serverCache } from './cache';
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ export class Server {
   runServer = async () => {
     try {
       await this.databaseConnection();
+      await serverCache.preCachingOptions();
       return this.serverListen();
     } catch (e) {
       return this.serverErrorHandler(e);

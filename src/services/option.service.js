@@ -1,5 +1,6 @@
 import { OptionRepository } from '../repositories';
 import { Messages } from '../error/messages';
+import { serverCache } from '../cache';
 
 class OptionService {
   _optionRepo = new OptionRepository();
@@ -12,14 +13,24 @@ class OptionService {
       };
     }
 
+    const result = await this._optionRepo.create(option);
+    if (result) {
+      serverCache.updateOption(result);
+    }
+
     return {
       code: 200,
-      data: await this._optionRepo.create(option),
+      data: result,
     };
   };
 
   delete = async (optionId) => {
-    await this._optionRepo.delete(optionId);
+    const result = await this._optionRepo.delete(optionId);
+
+    if (result > 0) {
+      serverCache.deleteOption(optionId);
+    }
+
     return {
       code: 200,
     };

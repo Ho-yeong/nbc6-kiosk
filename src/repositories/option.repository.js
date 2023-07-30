@@ -20,6 +20,10 @@ class OptionRepository {
       },
     });
   };
+
+  findAll = async () => {
+    return Option.findAll();
+  };
 }
 
 export default OptionRepository;

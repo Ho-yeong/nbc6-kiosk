@@ -5,6 +5,11 @@ const orderObject = {
   // 유저에게 받는 값
   itemId: 1,
   amount: 1,
+  option: {
+    shot: 1,
+    extra: true,
+    hot: true,
+  },
   // service 에서 계산해서 넣어준다
   price: 1000,
 };
