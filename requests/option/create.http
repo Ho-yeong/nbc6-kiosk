@@ -3,8 +3,7 @@ Content-Type: application/json
 
 {
   "shotPrice": 500,
-  "extraPrice": 700,
-  "hot": true
+  "hot": false
 }
 
 ###  {

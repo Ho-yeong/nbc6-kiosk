@@ -2,6 +2,6 @@ POST http://localhost:3000/api/orderItem
 Content-Type: application/json
 
 {
-  "itemId": 2,
-  "amount": 100
+  "itemId": 5,
+  "amount": 10
 }

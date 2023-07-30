@@ -31,22 +31,24 @@ class OrderService {
       }
 
       let price = orders[i].amount * item.price;
-      const option = serverCache.getOption(item.optionId);
-      if (!option) {
-        return {
-          code: 400,
-          message: Messages.NoneExistOption,
-        };
-      }
+      if (orders[i].option) {
+        const option = serverCache.getOption(item.optionId);
+        if (!option) {
+          return {
+            code: 400,
+            message: Messages.NoneExistOption,
+          };
+        }
 
-      if (orders[i].option.shot) {
-        price += option.shotPrice * orders[i].option.shot;
-      }
+        if (orders[i].option.shot) {
+          price += option.shotPrice * orders[i].option.shot * orders[i].amount;
+        }
 
-      if (orders[i].option.extra) {
-        price += option.extraPrice;
+        if (orders[i].option.extra) {
+          price += option.extraPrice * orders[i].amount;
+          console.log(price);
+        }
       }
-
       totalPrice += price;
 
       orders[i].price = price;

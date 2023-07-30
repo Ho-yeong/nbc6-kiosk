@@ -4,10 +4,28 @@ Content-Type: application/json
 {
   "orders": [
     {
+      "itemId": 1,
+      "amount": 1
+    },
+    {
       "itemId": 2,
       "amount": 1,
       "option": {
+        "hot": true
+      }
+    },
+    {
+      "itemId": 3,
+      "amount": 2,
+      "option": {
         "shot": 1,
+        "hot": false
+      }
+    },
+    {
+      "itemId": 3,
+      "amount": 1,
+      "option": {
         "extra": true,
         "hot": false
       }
