@@ -1,5 +1,5 @@
 import { ItemService } from '../services';
-import { Messages } from '../error/messages';
+import { sendResponse } from '../lib/api/response';
 
 class ItemController {
   _itemService = new ItemService();
@@ -15,10 +15,9 @@ class ItemController {
         optionId,
       });
 
-      res.status(code).json({ ...(data && { data }), ...(message && { message }) });
+      sendResponse(res, { ...(data && { items: data }), ...(message && { message }) });
     } catch (e) {
-      console.log(e);
-      res.status(500).json({ message: Messages.ServerError });
+      sendResponse(res, e, 500);
     }
   };
 
@@ -28,10 +27,9 @@ class ItemController {
 
       const { code, data, message } = await this._itemService.getItems(type);
 
-      res.status(code).json({ ...(data && { data }), ...(message && { message }) });
+      sendResponse(res, { ...(data && { items: data }), ...(message && { message }) });
     } catch (e) {
-      console.log(e);
-      res.status(500).json({ message: Messages.ServerError });
+      sendResponse(res, e, 500);
     }
   };
 
@@ -41,10 +39,9 @@ class ItemController {
 
       const { code, data, message } = await this._itemService.delete(itemId);
 
-      res.status(code).json({ ...(data && { data }), ...(message && { message }) });
+      sendResponse(res, { ...(data && { data }), ...(message && { message }) });
     } catch (e) {
-      console.log(e);
-      res.status(500).json({ message: Messages.ServerError });
+      sendResponse(res, e, 500);
     }
   };
 
@@ -54,10 +51,9 @@ class ItemController {
 
       const { code, data, message } = await this._itemService.forceDelete(itemId);
 
-      res.status(code).json({ ...(data && { data }), ...(message && { message }) });
+      sendResponse(res, { ...(data && { data }), ...(message && { message }) });
     } catch (e) {
-      console.log(e);
-      res.status(500).json({ message: Messages.ServerError });
+      sendResponse(res, e, 500);
     }
   };
 
@@ -67,10 +63,9 @@ class ItemController {
 
       const { code, data, message } = await this._itemService.modify({ id, name, price, optionId });
 
-      res.status(code).json({ ...(data && { data }), ...(message && { message }) });
+      sendResponse(res, { ...(data && { data }), ...(message && { message }) });
     } catch (e) {
-      console.log(e);
-      res.status(500).json({ message: Messages.ServerError });
+      sendResponse(res, e, 500);
     }
   };
 }

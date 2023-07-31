@@ -3,6 +3,7 @@ import { itemType } from '../constants';
 import { Messages } from '../error/messages';
 import { ValidationCheck } from '../utils/validationCheck';
 import { serverCache } from '../cache';
+import { ApplicationError } from '../lib/api/error';
 
 class ItemService {
   _itemRepo = new ItemRepository();
@@ -12,32 +13,36 @@ class ItemService {
     if (item.optionId) {
       const option = serverCache.getOption(item.optionId);
       if (!option) {
-        return {
+        throw new ApplicationError({
+          type: ApplicationError.type.INTERNAL,
           code: 404,
           message: Messages.NoneExistOption,
-        };
+        });
       }
     }
 
     if (!item.name) {
-      return {
+      throw new ApplicationError({
+        type: ApplicationError.type.INTERNAL,
         code: 400,
         message: Messages.WrongName,
-      };
+      });
     }
 
     if (!item.price || item.price < 0) {
-      return {
+      throw new ApplicationError({
+        type: ApplicationError.type.INTERNAL,
         code: 400,
         message: Messages.WrongPrice,
-      };
+      });
     }
 
     if (!ValidationCheck(itemType, item.type)) {
-      return {
+      throw new ApplicationError({
+        type: ApplicationError.type.INTERNAL,
         code: 400,
         message: Messages.WrongType,
-      };
+      });
     }
 
     return {
@@ -48,10 +53,11 @@ class ItemService {
 
   getItems = async (type) => {
     if (!ValidationCheck(itemType, type) && type !== 'all') {
-      return {
+      throw new ApplicationError({
+        type: ApplicationError.type.INTERNAL,
         code: 400,
         message: Messages.WrongType,
-      };
+      });
     }
 
     const origin = await this._itemRepo.getItems(type);
@@ -79,19 +85,22 @@ class ItemService {
     const item = await this._itemRepo.findOne(itemId);
     if (item.amount > 0) {
       serverCache.setItemId(itemId);
-      return {
+      // 특수한 코드 사용 요망 (다음 API 호출을 위해)
+      throw new ApplicationError({
+        type: ApplicationError.type.INTERNAL,
         code: 400,
-        message: '상품의 수량이 남아있습니다.',
-      };
+        message: Messages.AmountExistYet,
+      });
     }
 
     const result = await this._itemRepo.softDelete(itemId);
 
     if (!result[0]) {
-      return {
+      throw new ApplicationError({
+        type: ApplicationError.type.INTERNAL,
         code: 404,
-        message: '이미 삭제된 아이템입니다.',
-      };
+        message: Messages.AlreadyDeleted,
+      });
     }
 
     return {
@@ -105,19 +114,21 @@ class ItemService {
 
     const check = serverCache.checkWillDeleteItem(itemId);
     if (!check) {
-      return {
+      throw new ApplicationError({
+        type: ApplicationError.type.INTERNAL,
         code: 400,
         message: Messages.AlreadyDone,
-      };
+      });
     }
 
     const result = await this._itemRepo.softDelete(itemId);
 
     if (!result[0]) {
-      return {
+      throw new ApplicationError({
+        type: ApplicationError.type.INTERNAL,
         code: 404,
         message: Messages.NoneExist,
-      };
+      });
     }
 
     return {
@@ -127,36 +138,40 @@ class ItemService {
 
   modify = async (item) => {
     if (item.name !== undefined && item.name === '') {
-      return {
+      throw new ApplicationError({
+        type: ApplicationError.type.INTERNAL,
         code: 400,
         message: Messages.WrongName,
-      };
+      });
     }
 
     if (item.price !== undefined && item.price < 0) {
-      return {
+      throw new ApplicationError({
+        type: ApplicationError.type.INTERNAL,
         code: 400,
         message: Messages.WrongPrice,
-      };
+      });
     }
 
     if (item.optionId !== undefined) {
       const option = serverCache.getOption(item.optionId);
       if (!option) {
-        return {
+        throw new ApplicationError({
+          type: ApplicationError.type.INTERNAL,
           code: 404,
           message: Messages.NoneExistOption,
-        };
+        });
       }
     }
 
     const result = await this._itemRepo.modify(item);
     // 배열의 첫번째 항목 = 영향받은 row 의 갯수
     if (!result[0]) {
-      return {
+      throw new ApplicationError({
+        type: ApplicationError.type.INTERNAL,
         code: 404,
         message: Messages.NoneExist,
-      };
+      });
     }
 
     return {

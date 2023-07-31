@@ -10,5 +10,7 @@ export const Messages = {
   WrongState: '올바른 상태를 선택해주세요.',
   CannotChangeState: '상태를 변경할 수 없습니다.',
   LessAmount: '상품의 수량이 모자랍니다.',
+  AmountExistYet: '상품의 수량이 남아있습니다.',
   AlreadyDone: '처리가 끝난 요청입니다.',
+  AlreadyDeleted: '이미 삭제된 아이템입니다.',
 };

@@ -13,7 +13,7 @@ class ServerCache {
   preCachingOptions = async () => {
     const options = await this._optionRepo.findAll();
 
-    options.map((v) => {
+    options.forEach((v) => {
       this._nodeCache.set(`option:${v.id}`, v);
     });
   };
