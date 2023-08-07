@@ -1,12 +1,12 @@
 import { itemType } from '../../src/constants';
 import { ItemService } from '../../src/services';
+import { Messages } from '../../src/error/messages';
 
 jest.mock('../../src/cache');
 import { serverCache } from '../../src/cache';
 
 jest.mock('../../src/db');
 import { Item } from '../../src/db';
-import { Messages } from '../../src/error/messages';
 
 describe('Item Service', () => {
   let itemService;
@@ -125,7 +125,20 @@ describe('Item Service', () => {
     });
   });
 
-  // describe('getItems', () => {});
+  describe('getItems', () => {
+    let type;
+    it('should fail if no type', async () => {
+      type = 'TEST';
+
+      const { code, data, message } = await itemService.getItems(type);
+
+      expect(code).toBe(400);
+      expect(data).toEqual(undefined);
+      expect(message).toBe(Messages.WrongType);
+    });
+
+    // it('should be data', () => {});
+  });
   // describe('delete', () => {});
   // describe('forceDelete', () => {});
   // describe('modify', () => {});

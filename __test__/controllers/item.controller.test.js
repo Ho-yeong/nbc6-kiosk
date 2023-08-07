@@ -10,8 +10,6 @@ jest.mock('../../src/services', () => {
 });
 import { ItemService } from '../../src/services';
 
-console.log(ItemService);
-
 describe('Item Controller', () => {
   let itemController;
   let itemService;
@@ -38,7 +36,7 @@ describe('Item Controller', () => {
         type: itemType.COFFEE,
       };
 
-      itemService.create = jest.fn().mockRejectedValue(new Error('Jest Test error'));
+      itemService.create.mockRejectedValue(new Error('Jest Test error'));
 
       await itemController.create(req, res);
 
@@ -54,7 +52,7 @@ describe('Item Controller', () => {
         type: itemType.COFFEE,
       };
 
-      itemService.create = jest.fn().mockImplementation((item) => {
+      itemService.create.mockImplementation((item) => {
         return {
           code: 200,
           data: item,

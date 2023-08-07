@@ -11,6 +11,8 @@ class ItemService {
   create = async (item) => {
     if (item.optionId) {
       const option = serverCache.getOption(item.optionId);
+
+      // 옵션 아이디가 있는데 서버 캐시에 옵션 정보가 없을 경우
       if (!option) {
         return {
           code: 404,
@@ -19,6 +21,7 @@ class ItemService {
       }
     }
 
+    // 이름이 없을 경우
     if (!item.name) {
       return {
         code: 400,
@@ -26,6 +29,7 @@ class ItemService {
       };
     }
 
+    // 가격이 없거나 0보다 작을 경우
     if (!item.price || item.price < 0) {
       return {
         code: 400,
@@ -33,6 +37,7 @@ class ItemService {
       };
     }
 
+    // 타입이 안맞거나 없을 경우 에러
     if (!ValidationCheck(itemType, item.type)) {
       return {
         code: 400,
@@ -40,6 +45,7 @@ class ItemService {
       };
     }
 
+    // 성공
     return {
       code: 200,
       data: await this._itemRepo.create(item),
@@ -47,6 +53,7 @@ class ItemService {
   };
 
   getItems = async (type) => {
+    // 타입이 없거나 안맞을 경우
     if (!ValidationCheck(itemType, type) && type !== 'all') {
       return {
         code: 400,
