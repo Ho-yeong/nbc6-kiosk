@@ -1,7 +1,7 @@
 import request from 'supertest';
-import { sequelize } from '../../src/db';
-import { itemType } from '../../src/constants';
-import { Server } from '../../src/init';
+import { sequelize } from '../src/db';
+import { itemType } from '../src/constants';
+import { Server } from '../src/init';
 
 const server = new Server();
 
